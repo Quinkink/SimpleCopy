@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<strings lang="EN" language="English">
+    <view frame="APP">
+        <!--APP STRINGS-->
+        <string key="applicationTitle" value="FRAMEWORK" />
+        <string key="defaultStartView" value="Default"/>
+        <string key="menuBarOther" value="Menu" />
+        <string key="menuHelp" value="Help" />
+        <string key="menuAbout" value="About" />
+        <string key="menuQuit" value="Quit" />
+        <string key="messageTitleAbout" value="About this app" />
+        <string key="messageAbout" value="HARD CODDED SORRY" />
+        <string key="messageTitleHelp" value="Need help?" />
+        <string key="messageHelp" value="Phone a friend?" />
+    </view>
+    <view frame="DEFAULT">
+        <!--SEND STRINGS-->
+        <string key="defaultMessageClear" value="text cleared by user" />
+        <string key="defaultMessageWelcome" value="welcome" />
+        <string key="defaultMessageText" value="helloworld" />
+        <string key="defaultButton" value="Clear text" />
+    </view>
+</strings>

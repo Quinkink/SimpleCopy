@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<settings>
+	<!--APP SETTINGS-->
+	<setting key="version" value="1.0" />
+	<setting key="logLevel" value="DEBUG" />
+	<!--DATA FILE NAMES-->
+	<setting key="filenameLanguage" value="strings_EN.xml" />
+	<!--VIEW SETTINGS-->
+	<setting key="geometryAppView" value="+300+160"/>
+	<setting key="geometryDefaultView" value="648x186"/>
+</settings>
