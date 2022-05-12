@@ -16,4 +16,4 @@ class ConfigModel(BaseModel):
         This dictionary is defined in ApplicationController class
         """
         super(ConfigModel, self).__init__(filenames)
-        self.load_xml_strings('LIST')
+        self.load_xml_strings('CONFIG')

@@ -76,12 +76,21 @@ class Application(object):
         # ADD OTHER DATA FILES HERE
         filenames = {'settings': self.appModel.filenames['settings'],
                      'strings': self.appModel.filenames['strings']}
+        # LOAD MODEL
         self.model = self.app_mvc[mvc]['model'](filenames)
+
+        # LOAD CONTROLLER
         self.controller = self.app_mvc[mvc]['controller'](self)
+
+        # RAISE VIEW
         self.views[mvc].tkraise()
         self.visibleView = mvc
+
+        # CAUSE REFRESH
         self.appView.root.update_idletasks()
         self.appView.root.geometry(self.app_mvc[mvc]['geometry'])
+
+        # LOAD TOP MENU
         try:
             self.load_menu()
         except AttributeError:
@@ -107,8 +116,9 @@ class Application(object):
 
     def settings(self):
         """"""
-        self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
-                                                   self.appModel.strings['messageSettings'])
+        """self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
+                                                   self.appModel.strings['messageSettings'])"""
+        self.show_view('Config')
 
     def help(self):
         """"""

@@ -11,6 +11,7 @@ import datetime
 import urllib.error
 import urllib.request
 from multiprocessing.pool import ThreadPool
+from tkinter import StringVar
 
 import lib.functionEngine as functions
 
@@ -30,7 +31,7 @@ class DefaultController(object):
         self.model = self.app.model
         self.view = self.app.views['Default']
 
-        self.view.entryTextValue.trace("w", lambda name, index, mode, var=self.view.entryTextValue: self.update(var))
+        self.view.entryTextValue.trace("w", lambda name, index, mode, var=self.view.entryTextValue: self.action_update(var))
 
         self.feedback = self.model.strings['defaultMessageSuccess']
         self.colour = 'GREEN'
@@ -48,6 +49,7 @@ class DefaultController(object):
         self.application_feedback(self.model.strings['defaultMessageWelcome'], 'BLACK')
         self.view.labelTextValue.set(self.model.strings['defaultLabelValue'])
         self.view.entryTextValue.set(self.model.strings['defaultEntryValue'])
+        self.view.text['state'] = tk.NORMAL
         self.view.text.delete(1.0, tk.END)
         self.view.text.insert(tk.END, self.model.strings['defaultTextCopyPrompt'])
         self.view.text['state'] = tk.DISABLED
@@ -77,7 +79,6 @@ class DefaultController(object):
             self.feedback = self.model.strings['defaultMessageFailIllegalCharacters']
             self.colour = 'ORANGE'
 
-
         else:
             self.feedback = self.model.strings['defaultMessageSuccess']
             self.colour = 'GREEN'
@@ -100,7 +101,6 @@ class DefaultController(object):
                         self.colour = 'RED'
                     """finally:
                         self.view.buttonCopy['state'] = tk.DISABLED"""
-
                 else:
                     self.feedback = self.model.strings['defaultMessageNothingChanged']
                     self.colour = 'GREEN'
@@ -124,7 +124,7 @@ class DefaultController(object):
         self.view.text['state'] = tk.DISABLED
         self.view.buttonCopy['state'] = tk.NORMAL
 
-    def update(self, var):
+    def action_update(self, var):
         if self.view.entryTextValue.get() != self.model.strings['defaultEntryValue']:
             self.application_feedback(self.model.strings['defaultMessageWelcome'])
             self.view.text['state'] = tk.NORMAL

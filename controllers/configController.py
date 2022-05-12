@@ -7,6 +7,8 @@ import tkinter as tk
 import urllib.error
 import urllib.request
 from multiprocessing.pool import ThreadPool
+from tkinter import filedialog
+from tkinter import StringVar
 
 import lib.functionEngine as functions
 
@@ -25,6 +27,7 @@ class ConfigController(object):
         self.app.lastView = 'Default'
         self.model = self.app.model
         self.view = self.app.views['Config']
+
         self.load_model_config()
 
     def load_model_config(self):
@@ -33,9 +36,47 @@ class ConfigController(object):
         :return: void
         """
         self.application_feedback(self.model.strings['defaultMessageWelcome'])
+        self.view.text['state'] = tk.NORMAL
+        self.view.text.delete(1.0, tk.END)
         self.view.text.insert(tk.END, self.model.strings['defaultMessageText'])
+        self.view.text['state'] = tk.DISABLED
         self.view.text.focus()
-        self.view.button.config(text=(self.model.strings['defaultButton']), command=self.action)
+
+        self.view.entry1['state'] = tk.NORMAL
+        self.view.entry1Text.set(self.model.settings['source'])
+        self.view.entry1['state'] = tk.DISABLED
+        self.view.entry2['state'] = tk.NORMAL
+        self.view.entry2Text.set(self.model.settings['target'])
+        self.view.entry2['state'] = tk.DISABLED
+
+        self.view.button1.config(text=(self.model.strings['defaultButtonCancel']), command=self.action_cancel)
+        self.view.button2.config(text=(self.model.strings['defaultButtonApply']), command=self.action_apply)
+        self.view.button3.config(text=(self.model.strings['defaultButtonChoose']), command=self.action_source)
+        self.view.button4.config(text=(self.model.strings['defaultButtonChoose']), command=self.action_target)
+
+    def action_cancel(self):
+        self.app.show_view('Default')
+
+    def action_apply(self):
+        self.view.text.delete(1.0, tk.END)
+        self.application_feedback(self.model.strings['defaultMessageClear'], 'GREEN')
+        # self.show_view('Config')
+
+    def action_source(self):
+        directory = filedialog.askdirectory()
+        self.view.text.delete(1.0, tk.END)
+        self.application_feedback(directory, 'GREEN')
+        self.view.entry1['state'] = tk.NORMAL
+        self.view.entry1Text.set(directory)
+        self.view.entry1['state'] = tk.DISABLED
+
+    def action_target(self):
+        directory = filedialog.askdirectory()
+        self.view.text.delete(1.0, tk.END)
+        self.application_feedback(directory, 'GREEN')
+        self.view.entry2['state'] = tk.NORMAL
+        self.view.entry2Text.set(directory)
+        self.view.entry2['state'] = tk.DISABLED
 
     def action(self):
         self.view.text.delete(1.0, tk.END)

@@ -20,6 +20,7 @@ class DefaultView(baseFrame.BaseView):
 
     def __init__(self, master):
         super(DefaultView, self).__init__(master)
+
         self.labelTextValue = StringVar()
         self.entryTextValue = StringVar()
 
