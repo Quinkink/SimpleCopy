@@ -13,13 +13,15 @@ import tkinter as tk
 import views.baseView as baseFrame
 from tkinter import StringVar
 
+from views.defaultView import DefaultView
 
-class ListView(baseFrame.BaseView):
+
+class ConfigView(baseFrame.BaseView):
     """
     """
 
     def __init__(self, master):
-        super(DefaultView, self).__init__(master)
+        super(ConfigView, self).__init__(master)
 
         self.text = tk.Text(self, height=7)
         self.text.grid(row=1, column=0, columnspan=6, ipadx=0, ipady=0, padx=2, pady=0, sticky=(tk.EW, tk.NS))

@@ -7,5 +7,9 @@
 	<setting key="filenameLanguage" value="strings_EN.xml" />
 	<!--VIEW SETTINGS-->
 	<setting key="geometryAppView" value="+300+160"/>
-	<setting key="geometryDefaultView" value="648x186"/>
+	<setting key="geometryDefaultView" value="648x190"/> <!--9 rows-->
+	<setting key="geometrySettingsView" value="648x190"/>
+	<!--SETTINGS-->
+	<setting key="source" value="D:\PROGRAMMING\TestSimpleCopy\Source\"/>
+    <setting key="target" value="D:\PROGRAMMING\TestSimpleCopy\Target\"/>
 </settings>

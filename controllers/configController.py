@@ -11,7 +11,7 @@ from multiprocessing.pool import ThreadPool
 import lib.functionEngine as functions
 
 
-class ListController(object):
+class ConfigController(object):
     """
     DefaultController for DefaultView and DefaultModel
     """
@@ -24,7 +24,7 @@ class ListController(object):
         self.app = app
         self.app.lastView = 'Default'
         self.model = self.app.model
-        self.view = self.app.views['List']
+        self.view = self.app.views['Config']
         self.load_model_config()
 
     def load_model_config(self):

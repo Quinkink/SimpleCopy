@@ -20,6 +20,7 @@ class AppView:
         # LOAD ROOT
         self.root = tk.Tk()
         self.root.resizable(0, 0)
+        """Geometry set in applicationController"""
         self.root.winfo_toplevel().wm_geometry("")
         self.root.pack_propagate(1)
 

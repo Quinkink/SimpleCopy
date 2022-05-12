@@ -7,10 +7,13 @@ import tkinter as tk
 from tkinter import messagebox
 import lib.tkErrorCatcher as tec
 # APP MVC
+from controllers.configController import ConfigController
 from models.appModel import AppModel
+from models.configModel import ConfigModel
 from views.appView import AppView
 # SEND MVC
 from models.defaultModel import DefaultModel
+from views.configView import ConfigView
 from views.defaultView import DefaultView
 from controllers.defaultController import DefaultController
 # OTHER IMPORTS
@@ -40,7 +43,12 @@ class Application(object):
         self.app_mvc = {'Default': {'model': DefaultModel,
                                     'view': DefaultView,
                                     'controller': DefaultController,
-                                    'geometry': self.appModel.settings['geometryDefaultView']}}
+                                    'geometry': self.appModel.settings['geometryDefaultView']},
+                        'Config':  {'model': ConfigModel,
+                                    'view': ConfigView,
+                                    'controller': ConfigController,
+                                    'geometry': self.appModel.settings['geometryDefaultView']}
+                        }
         self.model = None
         self.controller = None
         self.views = {}
@@ -90,11 +98,17 @@ class Application(object):
         # self.appView.menubar.add_command(label=(self.appModel.strings['my_string_in_strings_EN.xml']),
         #                                command=(lambda: self.show_view('my_key_in_app_mvc')))
         self.appView.othermenu = tk.Menu(self.appView.menubar, tearoff=0)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuSettings']), command=self.settings)
         self.appView.othermenu.add_command(label=(self.appModel.strings['menuAbout']), command=self.about)
         self.appView.othermenu.add_command(label=(self.appModel.strings['menuHelp']), command=self.help)
         self.appView.othermenu.add_command(label=(self.appModel.strings['menuQuit']), command=self.quit)
         self.appView.menubar.add_cascade(label=self.appModel.strings['menuBarOther'], menu=self.appView.othermenu)
         self.appView.root.config(menu=self.appView.menubar)
+
+    def settings(self):
+        """"""
+        self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
+                                                   self.appModel.strings['messageSettings'])
 
     def help(self):
         """"""
@@ -108,7 +122,7 @@ class Application(object):
                                                    '\nVersion : ' + self.appModel.settings['version'] +
                                                    '\nCodded by Mark for a little fun'
                                                    '\non Github as Quinkink'
-                                                   '\nkingston.lewis@free.fr')
+                                                   '\nkingston.lewis@gmail.com')
 
     def run(self):
         """
@@ -163,11 +177,11 @@ class Application(object):
     # noinspection PyMethodMayBeStatic
     def message_dialogue_user_confirm(self, title, message, icon='warning'):
         """
-        tkinter messagebox.askquestion GUI maybe this should be in GUI
+        tkinter messagebox.askquestion GUI maybe this should be in view...
         :param title: (string) the title of the message
         :param message: (string) message to be displayed to user
         :param icon: icon to be displayed to user
         :return: boolean (YES,NO)
         """
-        result = tk.messagebox.askquestion(title, message, icon=icon)
+        result = tk.messagebox.askokcancel(title, message, icon=icon)
         return result
