@@ -32,5 +32,5 @@ class AppView:
         self.othermenu = None
 
         # GRID
-        self.container.grid(row=0, column=0, sticky=tk.W+tk.E)
+        self.container.grid(row=0, column=0, sticky='ew')
         self.container.grid_columnconfigure(0, weight=1)

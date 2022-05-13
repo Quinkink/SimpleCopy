@@ -38,6 +38,7 @@
     <view frame="CONFIG">
         <string key="defaultMessageWelcome" value="Settings" />
         <string key="defaultMessageText" value="helloworld" />
+        <string key="defaultMessageCancel" value="Action cancelled by user" />
         <string key="defaultMessageClear" value="Apply button : Clear" />
         <string key="defaultButtonChoose" value="Choose..." />
         <string key="defaultButtonApply" value="Apply" />

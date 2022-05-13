@@ -12,18 +12,18 @@ import shutil
 
 # ALSO IN settings.xml
 status = 'BETA'
-application_name = 'FRAMEWORK'
+application_name = 'SimpleCopy'
 current_version = '1.0'
 description_short = ''
 description_long = ''
 
 author = 'Mark LEWIS'
-email = 'mr.mark.lewis@free.fr'
+email = 'kingston.lewis@gmail.com.fr'
 project_url = 'https://github.com/Quinkink'
 project_download = 'https://github.com/Quinkink/releases'
 
-product_guid = '5623cf9e-bfc3-4d4c-baec-13fc15400130'
-upgrade_guid = 'cc172009-e909-471f-b52b-c4fb6c587684'
+product_guid = '5623cf9e-bfc3-4d4c-baec-13fc15402230'
+upgrade_guid = 'cc172009-e909-471f-b52b-c4fb6c522684'
 
 # DELETE PREVIOUS BUILDS
 for folder in ('./build/bdist.win-amd64', './build/exe.win-amd64-3.8'):

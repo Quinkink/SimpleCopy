@@ -25,24 +25,24 @@ class DefaultView(baseFrame.BaseView):
         self.entryTextValue = StringVar()
 
         self.label = tk.Label(self, textvariable=self.labelTextValue)
-        self.label.grid(row=1, column=0, columnspan=2, ipadx=0, ipady=0, padx=2, pady=0, sticky=(tk.W, tk.NS))
+        self.label.grid(row=1, column=0, columnspan=2, ipadx=0, ipady=0, padx=2, pady=0, sticky='wns')
         self.label.grid_columnconfigure(0, weight=1)
 
         self.entry = tk.Entry(self, textvariable=self.entryTextValue)
-        self.entry.grid(row=1, column=2, columnspan=4, ipadx=0, ipady=0, padx=2, pady=0, sticky=(tk.EW, tk.NS))
+        self.entry.grid(row=1, column=2, columnspan=4, ipadx=0, ipady=0, padx=2, pady=0, sticky='news')
         self.entry.grid_columnconfigure(0, weight=1)
 
         self.text = tk.Text(self, height=6)
-        self.text.grid(row=2, column=0, columnspan=6, ipadx=0, ipady=0, padx=2, pady=0, sticky=(tk.EW, tk.NS))
+        self.text.grid(row=2, column=0, columnspan=6, ipadx=0, ipady=0, padx=2, pady=0, sticky='news')
         self.text.grid_columnconfigure(0, weight=1)
 
-        self.buttonCopy = tk.Button(self, width=0, text='')
-        self.buttonCopy.grid(row=3, column=0, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky=tk.EW)
-        self.buttonCopy.grid_columnconfigure(0, weight=1)
-
         self.buttonReset = tk.Button(self, width=0, text='')
-        self.buttonReset.grid(row=3, column=3, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky=tk.EW)
+        self.buttonReset.grid(row=3, column=0, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky='ew')
         self.buttonReset.grid_columnconfigure(0, weight=1)
+
+        self.buttonCopy = tk.Button(self, width=0, text='')
+        self.buttonCopy.grid(row=3, column=3, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky='ew')
+        self.buttonCopy.grid_columnconfigure(0, weight=1)
 
 
 

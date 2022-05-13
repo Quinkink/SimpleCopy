@@ -36,8 +36,8 @@ class DefaultController(object):
         self.feedback = self.model.strings['defaultMessageSuccess']
         self.colour = 'GREEN'
 
-        self.source = self.model.settings['source']
-        self.target = self.model.settings['target']
+        self.source = self.model.xml_settings.get_element_value('source')
+        self.target = self.model.xml_settings.get_element_value('target')
 
         self.load_model_config()
 
@@ -47,15 +47,22 @@ class DefaultController(object):
         :return: void
         """
         self.application_feedback(self.model.strings['defaultMessageWelcome'], 'BLACK')
+
         self.view.labelTextValue.set(self.model.strings['defaultLabelValue'])
+
         self.view.entryTextValue.set(self.model.strings['defaultEntryValue'])
+        self.view.entry.focus()
+
         self.view.text['state'] = tk.NORMAL
         self.view.text.delete(1.0, tk.END)
         self.view.text.insert(tk.END, self.model.strings['defaultTextCopyPrompt'])
         self.view.text['state'] = tk.DISABLED
-        self.view.buttonCopy.config(text=(self.model.strings['defaultButtonCopy']), command=self.action_copy)
+
         self.view.buttonReset.config(text=(self.model.strings['defaultButtonReset']), command=self.action_reset)
-        self.view.entry.focus()
+        self.view.buttonReset['state'] = tk.NORMAL
+
+        self.view.buttonCopy.config(text=(self.model.strings['defaultButtonCopy']), command=self.action_copy)
+        self.view.buttonCopy['state'] = tk.NORMAL
 
     def action_copy(self):
 

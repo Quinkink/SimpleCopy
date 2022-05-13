@@ -20,5 +20,5 @@ class BaseView(tk.Frame):
         self.grid()
 
         self.feedback = tk.Text(self, width=0, height=1, state=tk.DISABLED)
-        self.feedback.grid(row=0, column=0, columnspan=6, ipadx=0, ipady=0, padx=0, pady=0, sticky=tk.EW)
+        self.feedback.grid(row=0, column=0, columnspan=6, ipadx=0, ipady=0, padx=0, pady=0, sticky='ew')
         self.feedback.grid_columnconfigure(0, weight=1)

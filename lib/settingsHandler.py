@@ -27,3 +27,31 @@ class XMLSettingsHandler(object):
         for elem in self.tree.iterfind('setting'):
             dictionary[elem.get('key')] = elem.get('value')
         return dictionary
+
+    def get_element_value(self, key):
+        """
+
+        """
+        result = False
+        for elem in self.tree.iterfind('setting'):
+            if elem.get('key') == key:
+                result = elem.get('value')
+        return result
+
+    def set_element_value(self, key, value):
+        """
+
+        """
+        result = False
+        for elem in self.tree.iterfind('setting'):
+            if elem.get('key') == key:
+                elem.set('value', value)
+                # elem.set('new_attribute', 'new_value')
+                if elem.get('value') == value:
+                    result = True
+                    try:
+                        with open(self.file, 'wb') as f:
+                            self.tree.write(f, encoding='utf-8')
+                    except FileNotFoundError:
+                        result = False
+        return result
