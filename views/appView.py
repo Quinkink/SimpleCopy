@@ -4,6 +4,7 @@ Created on 17 Mar 2020
 @author: Eleonore
 """
 import tkinter as tk
+from tkinter import N, E, W, S
 import views.baseView as baseFrame
 
 
@@ -32,5 +33,5 @@ class AppView:
         self.othermenu = None
 
         # GRID
-        self.container.grid(row=0, column=0, sticky='ew')
+        self.container.grid(row=0, column=0, sticky=N+E+W+S)
         self.container.grid_columnconfigure(0, weight=1)

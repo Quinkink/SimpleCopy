@@ -26,7 +26,7 @@ product_guid = '5623cf9e-bfc3-4d4c-baec-13fc15402230'
 upgrade_guid = 'cc172009-e909-471f-b52b-c4fb6c522684'
 
 # DELETE PREVIOUS BUILDS
-for folder in ('./build/bdist.win-amd64', './build/exe.win-amd64-3.8'):
+for folder in ('./build/bdist.win-amd64', './build/exe.win-amd64-3.8', './build/bdist.win32', './build/exe.win32-3.10'):
     if os.path.exists(folder):
         shutil.rmtree(folder)
         print(folder + " deleted")
@@ -117,7 +117,7 @@ base = 'Win32GUI' if sys.platform == 'win32' else None
 executables = [
     Executable('main.py',
                base=base,
-               targetName=application_name.lower(),
+               target_name=application_name.lower(),
                icon="src/app.ico",
                copyright="GNU/GPL")
 ]

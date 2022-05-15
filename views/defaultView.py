@@ -11,7 +11,7 @@ Created on 17 Mar 2020
 """
 import tkinter as tk
 import views.baseView as baseFrame
-from tkinter import StringVar
+from tkinter import StringVar, N, E, W, S
 
 
 class DefaultView(baseFrame.BaseView):
@@ -25,23 +25,23 @@ class DefaultView(baseFrame.BaseView):
         self.entryTextValue = StringVar()
 
         self.label = tk.Label(self, textvariable=self.labelTextValue)
-        self.label.grid(row=1, column=0, columnspan=2, ipadx=0, ipady=0, padx=2, pady=0, sticky='wns')
+        self.label.grid(row=1, column=0, columnspan=2, ipadx=0, ipady=0, padx=2, pady=0, sticky=N+E+W+S)
         self.label.grid_columnconfigure(0, weight=1)
 
         self.entry = tk.Entry(self, textvariable=self.entryTextValue)
-        self.entry.grid(row=1, column=2, columnspan=4, ipadx=0, ipady=0, padx=2, pady=0, sticky='news')
+        self.entry.grid(row=1, column=2, columnspan=4, ipadx=0, ipady=0, padx=2, pady=0, sticky=N+E+W+S)
         self.entry.grid_columnconfigure(0, weight=1)
 
-        self.text = tk.Text(self, height=6)
-        self.text.grid(row=2, column=0, columnspan=6, ipadx=0, ipady=0, padx=2, pady=0, sticky='news')
+        self.text = tk.Text(self, height=5)
+        self.text.grid(row=2, column=0, columnspan=6, ipadx=0, ipady=0, padx=2, pady=0, sticky=N+E+W+S)
         self.text.grid_columnconfigure(0, weight=1)
 
         self.buttonReset = tk.Button(self, width=0, text='')
-        self.buttonReset.grid(row=3, column=0, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky='ew')
+        self.buttonReset.grid(row=3, column=0, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky=E+W)
         self.buttonReset.grid_columnconfigure(0, weight=1)
 
         self.buttonCopy = tk.Button(self, width=0, text='')
-        self.buttonCopy.grid(row=3, column=3, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky='ew')
+        self.buttonCopy.grid(row=3, column=3, columnspan=3, ipadx=0, ipady=0, padx=4, pady=2, sticky=E+W)
         self.buttonCopy.grid_columnconfigure(0, weight=1)
 
 

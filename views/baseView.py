@@ -4,6 +4,7 @@ Created on 17 Mar 2020
 @author: Eleonore
 """
 import tkinter as tk
+from tkinter import N, E, W, S
 
 
 class BaseView(tk.Frame):
@@ -19,6 +20,6 @@ class BaseView(tk.Frame):
         tk.Frame.__init__(self, master)
         self.grid()
 
-        self.feedback = tk.Text(self, width=0, height=1, state=tk.DISABLED)
-        self.feedback.grid(row=0, column=0, columnspan=6, ipadx=0, ipady=0, padx=0, pady=0, sticky='ew')
+        self.feedback = tk.Text(self, width=0, height=0, state=tk.DISABLED)
+        self.feedback.grid(row=0, column=0, columnspan=6, ipadx=2, ipady=2, padx=2, pady=2, sticky=N+E+W+S)
         self.feedback.grid_columnconfigure(0, weight=1)
