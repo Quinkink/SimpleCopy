@@ -8,8 +8,10 @@ from tkinter import messagebox
 import lib.tkErrorCatcher as tec
 # APP MVC
 from controllers.configController import ConfigController
+from controllers.minimalController import MinimalController
 from models.appModel import AppModel
 from models.configModel import ConfigModel
+from models.minimalModel import MinimalModel
 from views.appView import AppView
 # SEND MVC
 from models.defaultModel import DefaultModel
@@ -18,6 +20,7 @@ from views.defaultView import DefaultView
 from controllers.defaultController import DefaultController
 # OTHER IMPORTS
 import lib.functionEngine as functions
+from views.minimalView import MinimalView
 
 
 class Application(object):
@@ -37,17 +40,21 @@ class Application(object):
         self.appView = AppView()
         self.appView.root.protocol('WM_DELETE_WINDOW', self.quit)
         self.appView.root.geometry(self.appModel.settings['geometryAppView'])
-        self.visibleView = self.appModel.strings['defaultStartView']
+        self.visibleView = self.appModel.settings['defaultStartView']
         self.lastView = None
         # ADD OTHER MVC FRAMES HERE
         self.app_mvc = {'Default': {'model': DefaultModel,
                                     'view': DefaultView,
                                     'controller': DefaultController,
                                     'geometry': self.appModel.settings['geometryDefaultView']},
-                        'Config':  {'model': ConfigModel,
-                                    'view': ConfigView,
-                                    'controller': ConfigController,
-                                    'geometry': self.appModel.settings['geometryDefaultView']}
+                        'Config': {'model': ConfigModel,
+                                   'view': ConfigView,
+                                   'controller': ConfigController,
+                                   'geometry': self.appModel.settings['geometryConfigView']},
+                        'Minimal': {'model': MinimalModel,
+                                    'view': MinimalView,
+                                    'controller': MinimalController,
+                                    'geometry': self.appModel.settings['geometryMinimalView']}
                         }
         self.model = None
         self.controller = None
@@ -89,6 +96,7 @@ class Application(object):
         # CAUSE REFRESH
         self.appView.root.update_idletasks()
         self.appView.root.geometry(self.app_mvc[mvc]['geometry'])
+        self.views[mvc].focus_set()
 
         # LOAD TOP MENU
         try:
@@ -107,12 +115,26 @@ class Application(object):
         # self.appView.menubar.add_command(label=(self.appModel.strings['my_string_in_strings_EN.xml']),
         #                                command=(lambda: self.show_view('my_key_in_app_mvc')))
         self.appView.othermenu = tk.Menu(self.appView.menubar, tearoff=0)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuMinimal']), command=self.minimal)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuVerbose']), command=self.verbose)
         self.appView.othermenu.add_command(label=(self.appModel.strings['menuSettings']), command=self.settings)
         self.appView.othermenu.add_command(label=(self.appModel.strings['menuAbout']), command=self.about)
         self.appView.othermenu.add_command(label=(self.appModel.strings['menuHelp']), command=self.help)
         self.appView.othermenu.add_command(label=(self.appModel.strings['menuQuit']), command=self.quit)
         self.appView.menubar.add_cascade(label=self.appModel.strings['menuBarOther'], menu=self.appView.othermenu)
         self.appView.root.config(menu=self.appView.menubar)
+
+    def minimal(self):
+        """"""
+        """self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
+                                                   self.appModel.strings['messageSettings'])"""
+        self.show_view('Minimal')
+
+    def verbose(self):
+        """"""
+        """self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
+                                                   self.appModel.strings['messageSettings'])"""
+        self.show_view('Default')
 
     def settings(self):
         """"""
@@ -139,7 +161,7 @@ class Application(object):
         called by main. This is the main loop for tkinter
         :return: void
         """
-        self.appView.root.title(self.appModel.strings['applicationTitle'])
+        self.appView.root.title(self.appModel.settings['applicationTitle'])
         self.appView.root.iconbitmap(functions.find_data_file('app.ico', 'src'))
         self.appView.root.deiconify()
         self.appView.root.mainloop()
