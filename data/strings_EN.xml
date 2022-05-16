@@ -37,7 +37,8 @@
     </view>
     <view frame="CONFIG">
         <string key="defaultMessageWelcome" value="Settings" />
-        <string key="defaultMessageText" value="helloworld" />
+        <string key="defaultMessageText" value="Configure your settings" />
+        <string key="defaultCheckbuttonText" value="Open folder after copy?" />
         <string key="defaultMessageCancel" value="Action cancelled by user" />
         <string key="defaultMessageClear" value="Apply button : Clear" />
         <string key="defaultButtonChoose" value="Choose..." />
@@ -58,5 +59,6 @@
         <string key="defaultMessageFailRemove" value="Unable to Overwrite : Folder not copied" />
         <string key="defaultMessageNothingChanged" value="Overwrite cancelled by operator" />
         <string key="defaultMessageWelcome" value="Copy SOURCE folder -> TARGET folder." />
+        <string key="defaultButtonCopy" value=">" />
     </view>
 </strings>

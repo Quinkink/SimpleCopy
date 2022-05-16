@@ -116,9 +116,14 @@ class DefaultController(object):
                 self.colour = 'RED'
             finally:
                 self.view.buttonCopy['state'] = tk.DISABLED
+                if self.model.settings['openFolderAfterCopy']:
+                    self.action_open_after_copy()
 
         self.view.text.delete(1.0, tk.END)
         self.application_feedback(self.feedback, self.colour)
+
+    def action_open_after_copy(self):
+        os.system('start ' + self.target + self.view.entry.get())
 
     def action_reset(self):
         self.feedback = self.model.strings['defaultMessageWelcome']

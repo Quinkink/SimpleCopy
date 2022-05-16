@@ -36,6 +36,9 @@ class MinimalController(object):
         self.feedback = self.model.strings['defaultMessageSuccess']
         self.colour = 'GREEN'
 
+        self.source = self.model.xml_settings.get_element_value('source')
+        self.target = self.model.xml_settings.get_element_value('target')
+
         self.load_model_config()
 
     def load_model_config(self):
@@ -48,6 +51,9 @@ class MinimalController(object):
         self.view.labelTextValue.set(self.model.strings['defaultLabelValue'])
 
         self.view.entryTextValue.set(self.model.strings['defaultEntryValue'])
+
+        self.view.buttonCopy.config(text=(self.model.strings['defaultButtonCopy']), command=self.action_copy)
+        self.view.buttonCopy['state'] = tk.NORMAL
 
     def action_return_copy(self, event):
         self.action_copy()
@@ -101,8 +107,13 @@ class MinimalController(object):
                 self.colour = 'RED'
             finally:
                 self.view.buttonCopy['state'] = tk.DISABLED
+                if self.model.settings['openFolderAfterCopy']:
+                    self.action_open_after_copy()
 
         self.application_feedback(self.feedback, self.colour)
+
+    def action_open_after_copy(self):
+        os.system('start ' + self.target + self.view.entry.get())
 
     def action_reset(self):
         self.feedback = self.model.strings['defaultMessageWelcome']
