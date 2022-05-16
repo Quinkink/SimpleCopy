@@ -5,6 +5,7 @@ Created on 17 Mar 2020
 """
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import N, E, W, S
 import lib.tkErrorCatcher as tec
 # APP MVC
 from controllers.configController import ConfigController
@@ -69,7 +70,7 @@ class Application(object):
         """
         for name, mvc in self.app_mvc.items():
             frame = mvc['view'](self.appView.container)
-            frame.grid(row=2, column=2, sticky=(tk.NW + tk.SE))
+            frame.grid(row=2, column=2, sticky=N+E+W+S)
             self.views[name] = frame
         else:
             self.show_view(self.visibleView)
@@ -150,7 +151,7 @@ class Application(object):
     def about(self):
         """"""
         self.message_dialogue_information_feedback(self.appModel.strings['messageTitleAbout'],
-                                                   'Application : ' + self.appModel.strings['applicationTitle'] +
+                                                   'Application : ' + self.appModel.settings['applicationTitle'] +
                                                    '\nVersion : ' + self.appModel.settings['version'] +
                                                    '\nCodded by Mark for a little fun'
                                                    '\non Github as Quinkink'

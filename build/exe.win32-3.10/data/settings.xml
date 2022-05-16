@@ -1,0 +1,14 @@
+<settings>
+	
+	<setting key="version" value="1.0" />
+	<setting key="logLevel" value="DEBUG" />
+	
+	<setting key="filenameLanguage" value="strings_EN.xml" />
+	
+	<setting key="geometryAppView" value="+300+160" />
+	<setting key="geometryDefaultView" value="648x190" /> 
+	<setting key="geometrySettingsView" value="648x190" />
+	
+	<setting key="source" value="C:/PortableApps/SoftPerfectNetScanPortable/Other/Help/" />
+    <setting key="target" value="C:/PortableApps/SoftPerfectNetScanPortable/Other/Help/" />
+</settings>

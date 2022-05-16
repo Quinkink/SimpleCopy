@@ -17,16 +17,18 @@ class AppView:
 
         """
 
-        """Load tkinter root"""
+        """LOAD TKINTER ROOT"""
         # LOAD ROOT
         self.root = tk.Tk()
         self.root.resizable(0, 0)
-        """Geometry set in applicationController"""
+        """GEOMETRY IS SET IN APPLICATION CONTROLLER"""
         self.root.winfo_toplevel().wm_geometry("")
-        self.root.pack_propagate(1)
+        # self.root.pack_propagate(1)
+        # self.root.columnconfigure(0, weight=1)
+        # self.root.rowconfigure(0, weight=1)
 
         # WIDGETS
-        """MAIN APP CONTAINER FRAME"""
+        """MAIN APP CONTAINER FRAME ALL THE VIEWS ARE INCLUDED IN"""
         self.container = tk.Frame(self.root)
         self.menubar = None
         self.navigationmenu = None
@@ -34,4 +36,3 @@ class AppView:
 
         # GRID
         self.container.grid(row=0, column=0, sticky=N+E+W+S)
-        self.container.grid_columnconfigure(0, weight=1)

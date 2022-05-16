@@ -41,19 +41,22 @@ class ConfigController(object):
         self.view.text.insert(tk.END, self.model.strings['defaultMessageText'])
         self.view.text['state'] = tk.DISABLED
 
+        self.view.varOpenFolderAfterCopy.set(self.model.settings['openFolderAfterCopy'])
+        self.view.checkbutton.config(text=(self.model.strings['defaultCheckbuttonText']))
+
         self.view.entry1['state'] = tk.NORMAL
-        self.view.entry1Text.set(self.model.settings['source'])
+        self.view.varSourceFolderString.set(self.model.settings['source'])
         self.view.entry1['state'] = tk.DISABLED
 
         self.view.entry2['state'] = tk.NORMAL
-        self.view.entry2Text.set(self.model.settings['target'])
+        self.view.varTargetFolderString.set(self.model.settings['target'])
         self.view.entry2['state'] = tk.DISABLED
 
-        self.view.button1.config(text=(self.model.strings['defaultButtonCancel']), command=self.action_cancel)
-        self.view.button2.config(text=(self.model.strings['defaultButtonApply']), command=self.action_apply)
-        self.view.button3.config(text=(self.model.strings['defaultButtonChoose']), command=self.action_source)
-        self.view.button4.config(text=(self.model.strings['defaultButtonChoose']), command=self.action_target)
-        self.view.button1.focus()
+        self.view.buttonCancel.config(text=(self.model.strings['defaultButtonCancel']), command=self.action_cancel)
+        self.view.buttonApply.config(text=(self.model.strings['defaultButtonApply']), command=self.action_apply)
+        self.view.buttonChooseSource.config(text=(self.model.strings['defaultButtonChoose']), command=self.action_source)
+        self.view.buttonChooseTarget.config(text=(self.model.strings['defaultButtonChoose']), command=self.action_target)
+        self.view.buttonCancel.focus()
 
     def action_cancel(self):
         self.app.show_view('Default')
@@ -61,8 +64,9 @@ class ConfigController(object):
     def action_apply(self):
         self.view.text.delete(1.0, tk.END)
         self.application_feedback(self.model.strings['defaultMessageClear'], 'GREEN')
-        self.model.xml_settings.set_element_value('source', self.view.entry1Text.get())
-        self.model.xml_settings.set_element_value('target', self.view.entry2Text.get())
+        self.model.xml_settings.set_element_value('openFolderAfterCopy', self.view.varOpenFolderAfterCopy.get())
+        self.model.xml_settings.set_element_value('source', self.view.varSourceFolderString.get())
+        self.model.xml_settings.set_element_value('target', self.view.varTargetFolderString.get())
         self.app.show_view('Default')
 
     def action_source(self):
@@ -71,7 +75,7 @@ class ConfigController(object):
             self.view.text.delete(1.0, tk.END)
             self.application_feedback(directory, 'GREEN')
             self.view.entry1['state'] = tk.NORMAL
-            self.view.entry1Text.set(directory + '/')
+            self.view.varSourceFolderString.set(directory + '/')
             self.view.entry1['state'] = tk.DISABLED
         else:
             self.application_feedback(self.model.strings['defaultMessageCancel'], 'ORANGE')
@@ -82,7 +86,7 @@ class ConfigController(object):
             self.view.text.delete(1.0, tk.END)
             self.application_feedback(directory, 'GREEN')
             self.view.entry2['state'] = tk.NORMAL
-            self.view.entry2Text.set(directory + '/')
+            self.view.varTargetFolderString.set(directory + '/')
             self.view.entry2['state'] = tk.DISABLED
         else:
             self.application_feedback(self.model.strings['defaultMessageCancel'], 'ORANGE')
