@@ -12,7 +12,7 @@ class AppView:
     """
     """
 
-    def __init__(self):
+    def __init__(self, resizable_x, resizable_y):
         """
 
         """
@@ -20,7 +20,7 @@ class AppView:
         """LOAD TKINTER ROOT"""
         # LOAD ROOT
         self.root = tk.Tk()
-        self.root.resizable(0, 0)
+        self.root.resizable(resizable_x, resizable_y)
         """GEOMETRY IS SET IN APPLICATION CONTROLLER"""
         self.root.winfo_toplevel().wm_geometry("")
         # self.root.pack_propagate(1)

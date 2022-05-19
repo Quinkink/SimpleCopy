@@ -5,7 +5,7 @@ Created on 17 Mar 2020
 """
 
 from controllers import applicationController
-
+""":type: string"""
 filename = 'settings.xml'
 
 if __name__ == '__main__':

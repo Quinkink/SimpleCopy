@@ -34,11 +34,13 @@ class Application(object):
         """
         Init for Application
         :param settings: (string) settings xml filename
+        :param settings: (dict) collection of data -unused?
+        :param settings: (string) strings xml filename
         """
         self.appModel = AppModel({'settings': functions.find_data_file(settings, 'data'),
                                   'strings': None})
         tk.CallWrapper = tec.TkErrorCatcher
-        self.appView = AppView()
+        self.appView = AppView(self.appModel.settings['resizable_x'],self.appModel.settings['resizable_y'])
         self.appView.root.protocol('WM_DELETE_WINDOW', self.quit)
         self.appView.root.geometry(self.appModel.settings['geometryAppView'])
         self.visibleView = self.appModel.settings['defaultStartView']
