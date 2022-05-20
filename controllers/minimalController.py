@@ -33,8 +33,8 @@ class MinimalController(object):
         self.view.entry.bind('<Return>', self.action_return_copy(event='<Return>'))
         self.view.entry.focus()
 
-        self.feedback = self.model.strings['defaultMessageSuccess']
-        self.colour = 'GREEN'
+        # self.feedback = self.model.strings['defaultMessageSuccess']
+        # self.colour = 'GREEN'
 
         self.source = self.model.xml_settings.get_element_value('source')
         self.target = self.model.xml_settings.get_element_value('target')
@@ -56,7 +56,8 @@ class MinimalController(object):
         self.view.buttonCopy['state'] = tk.NORMAL
 
     def action_return_copy(self, event):
-        self.action_copy()
+        self.application_feedback(str(self.app.appView.root.winfo_width()) + " - " + str(self.app.appView.root.winfo_height()), 'ORANGE')
+        # self.action_copy()
 
     def action_copy(self):
 
@@ -66,20 +67,16 @@ class MinimalController(object):
         now = self.now.replace(":", "")"""
 
         if self.view.entryTextValue.get() == self.model.strings['defaultEntryValue']:
-            self.feedback = self.model.strings['defaultMessageFailFolderName']
-            self.colour = 'ORANGE'
+            self.application_feedback(self.model.strings['defaultMessageFailFolderName'], 'ORANGE')
 
         elif self.view.entryTextValue.get() == "":
-            self.feedback = self.model.strings['defaultMessageFailNoFolderName']
-            self.colour = 'ORANGE'
+            self.application_feedback(self.model.strings['defaultMessageFailNoFolderName'], 'ORANGE')
 
         elif not re.fullmatch('^[^\\\\/?%*:|\"\'<>.]{1,32}$', self.view.entryTextValue.get()):
-            self.feedback = self.model.strings['defaultMessageFailIllegalCharacters']
-            self.colour = 'ORANGE'
+            self.application_feedback(self.model.strings['defaultMessageFailIllegalCharacters'],'ORANGE')
 
         else:
-            self.feedback = self.model.strings['defaultMessageSuccess']
-            self.colour = 'GREEN'
+            self.application_feedback(self.model.strings['defaultMessageSuccess'], 'GREEN')
             try:
                 """copy from source to target"""
                 shutil.copytree(self.source, self.target + self.view.entry.get())
@@ -89,36 +86,30 @@ class MinimalController(object):
                         """remove existing target folder after prompt"""
                         shutil.rmtree(self.target + self.view.entry.get())
                     except FileExistsError:
-                        self.feedback = self.model.strings['defaultMessageFailRemove']
-                        self.colour = 'RED'
+                        self.application_feedback(self.model.strings['defaultMessageFailRemove'], 'RED')
                     try:
                         """copy from source to target"""
                         shutil.copytree(self.source, self.target + self.view.entry.get())
                     except FileExistsError:
-                        self.feedback = self.model.strings['defaultMessageFailExists']
-                        self.colour = 'RED'
+                        self.application_feedback(self.model.strings['defaultMessageFailExists'], 'RED')
                     """finally:
                         self.view.buttonCopy['state'] = tk.DISABLED"""
                 else:
-                    self.feedback = self.model.strings['defaultMessageNothingChanged']
-                    self.colour = 'GREEN'
+                    self.application_feedback(self.model.strings['defaultMessageNothingChanged'], 'GREEN')
             except PermissionError:
-                self.feedback = self.model.strings['defaultMessageFailPermission']
-                self.colour = 'RED'
+                self.application_feedback(self.model.strings['defaultMessageFailPermission'], 'RED')
             finally:
                 self.view.buttonCopy['state'] = tk.DISABLED
-                if self.model.settings['openFolderAfterCopy']:
+                if self.model.settings['openFolderAfterCopy'] == 'True':
                     self.action_open_after_copy()
 
-        self.application_feedback(self.feedback, self.colour)
+        self.application_feedback(self.model.strings['defaultMessageSuccess'], 'GREEN')
 
     def action_open_after_copy(self):
         os.system('start ' + self.target + self.view.entry.get())
 
     def action_reset(self):
-        self.feedback = self.model.strings['defaultMessageWelcome']
-        self.colour = 'BLACK'
-        self.application_feedback(self.feedback, self.colour)
+        self.application_feedback(self.model.strings['defaultMessageWelcome'], 'BLACK')
         self.view.entryTextValue.set(self.model.strings['defaultEntryValue'])
         self.view.buttonCopy['state'] = tk.NORMAL
 

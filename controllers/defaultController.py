@@ -116,7 +116,7 @@ class DefaultController(object):
                 self.colour = 'RED'
             finally:
                 self.view.buttonCopy['state'] = tk.DISABLED
-                if self.model.settings['openFolderAfterCopy']:
+                if self.model.settings['openFolderAfterCopy'] == 'True':
                     self.action_open_after_copy()
 
         self.view.text.delete(1.0, tk.END)
@@ -135,6 +135,7 @@ class DefaultController(object):
         self.view.text.insert(tk.END, self.model.strings['defaultTextCopyPrompt'])
         self.view.text['state'] = tk.DISABLED
         self.view.buttonCopy['state'] = tk.NORMAL
+
 
     def action_update(self, var):
         if self.view.entryTextValue.get() != self.model.strings['defaultEntryValue']:

@@ -19,6 +19,7 @@ class BaseView(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         self.grid()
+
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
@@ -27,5 +28,4 @@ class BaseView(tk.Frame):
         self.columnconfigure(5, weight=1)
 
         self.feedback = tk.Text(self, width=0, height=0, state=tk.DISABLED)
-        # self.feedback.configure(height=1, width=1)
-        self.feedback.grid(row=0, column=0, columnspan=6, ipadx=4, ipady=2, padx=2, pady=2, sticky=N+W+E+S)
+        self.feedback.grid(row=0, column=0, columnspan=6, ipadx=2, ipady=2, padx=2, pady=2, sticky=N+E+W+S)

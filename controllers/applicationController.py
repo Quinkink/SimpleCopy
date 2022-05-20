@@ -4,23 +4,24 @@ Created on 17 Mar 2020
 @author: Eleonore
 """
 import tkinter as tk
-from tkinter import messagebox
 from tkinter import N, E, W, S
+from tkinter import messagebox
+
+# OTHER IMPORTS
+import lib.functionEngine as functions
 import lib.tkErrorCatcher as tec
 # APP MVC
 from controllers.configController import ConfigController
+from controllers.defaultController import DefaultController
 from controllers.minimalController import MinimalController
 from models.appModel import AppModel
 from models.configModel import ConfigModel
-from models.minimalModel import MinimalModel
-from views.appView import AppView
 # SEND MVC
 from models.defaultModel import DefaultModel
+from models.minimalModel import MinimalModel
+from views.appView import AppView
 from views.configView import ConfigView
 from views.defaultView import DefaultView
-from controllers.defaultController import DefaultController
-# OTHER IMPORTS
-import lib.functionEngine as functions
 from views.minimalView import MinimalView
 
 
@@ -37,14 +38,29 @@ class Application(object):
         :param settings: (dict) collection of data -unused?
         :param settings: (string) strings xml filename
         """
+
+        self.window_width = 0
+        self.window_height = 0
+
         self.appModel = AppModel({'settings': functions.find_data_file(settings, 'data'),
                                   'strings': None})
         tk.CallWrapper = tec.TkErrorCatcher
+
+        # resizable window from settings.xml
         self.appView = AppView(self.appModel.settings['resizable_x'],self.appModel.settings['resizable_y'])
-        self.appView.root.protocol('WM_DELETE_WINDOW', self.quit)
+
+        # window geometry from settings.xml
         self.appView.root.geometry(self.appModel.settings['geometryAppView'])
+
+        # connect window X close to quit function
+        self.appView.root.protocol('WM_DELETE_WINDOW', self.do_quit)
+
+        """self.appView.root.bind("<Configure>", self.event_resize)"""
+
+        # default start up view from settings.xml
         self.visibleView = self.appModel.settings['defaultStartView']
         self.lastView = None
+
         # ADD OTHER MVC FRAMES HERE
         self.app_mvc = {'Default': {'model': DefaultModel,
                                     'view': DefaultView,
@@ -59,9 +75,13 @@ class Application(object):
                                     'controller': MinimalController,
                                     'geometry': self.appModel.settings['geometryMinimalView']}
                         }
+
+        # INIT STATE
         self.model = None
         self.controller = None
         self.views = {}
+
+        # LOAD APP STATE
         self.load_views()
         self.load_menu()
 
@@ -107,6 +127,15 @@ class Application(object):
         except AttributeError:
             pass
 
+
+    """
+    def event_resize(self, event):
+        if hasattr(event.widget, 'widgetName'):
+            self.message_dialogue_warning_feedback("event", event.widget.widgetName, icon='warning')
+            if event.widget.widgetName == "frame":
+                if (self.window_width != event.width) and (self.window_height != event.height):
+                    self.window_width, self.window_height = event.width, event.height"""
+
     def load_menu(self):
         """
         loads application top menu tk object and data. Should this be here or in appView?
@@ -118,39 +147,39 @@ class Application(object):
         # self.appView.menubar.add_command(label=(self.appModel.strings['my_string_in_strings_EN.xml']),
         #                                command=(lambda: self.show_view('my_key_in_app_mvc')))
         self.appView.othermenu = tk.Menu(self.appView.menubar, tearoff=0)
-        self.appView.othermenu.add_command(label=(self.appModel.strings['menuMinimal']), command=self.minimal)
-        self.appView.othermenu.add_command(label=(self.appModel.strings['menuVerbose']), command=self.verbose)
-        self.appView.othermenu.add_command(label=(self.appModel.strings['menuSettings']), command=self.settings)
-        self.appView.othermenu.add_command(label=(self.appModel.strings['menuAbout']), command=self.about)
-        self.appView.othermenu.add_command(label=(self.appModel.strings['menuHelp']), command=self.help)
-        self.appView.othermenu.add_command(label=(self.appModel.strings['menuQuit']), command=self.quit)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuMinimal']), command=self.open_minimal)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuVerbose']), command=self.open_verbose)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuSettings']), command=self.open_settings)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuAbout']), command=self.do_about)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuHelp']), command=self.do_help)
+        self.appView.othermenu.add_command(label=(self.appModel.strings['menuQuit']), command=self.do_quit)
         self.appView.menubar.add_cascade(label=self.appModel.strings['menuBarOther'], menu=self.appView.othermenu)
         self.appView.root.config(menu=self.appView.menubar)
 
-    def minimal(self):
+    def open_minimal(self):
         """"""
         """self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
                                                    self.appModel.strings['messageSettings'])"""
         self.show_view('Minimal')
 
-    def verbose(self):
+    def open_verbose(self):
         """"""
         """self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
                                                    self.appModel.strings['messageSettings'])"""
         self.show_view('Default')
 
-    def settings(self):
+    def open_settings(self):
         """"""
         """self.message_dialogue_information_feedback(self.appModel.strings['messageTitleSettings'],
                                                    self.appModel.strings['messageSettings'])"""
         self.show_view('Config')
 
-    def help(self):
+    def do_help(self):
         """"""
         self.message_dialogue_information_feedback(self.appModel.strings['messageTitleHelp'],
                                                    self.appModel.strings['messageHelp'])
 
-    def about(self):
+    def do_about(self):
         """"""
         self.message_dialogue_information_feedback(self.appModel.strings['messageTitleAbout'],
                                                    'Application : ' + self.appModel.settings['applicationTitle'] +
@@ -169,9 +198,9 @@ class Application(object):
         self.appView.root.deiconify()
         self.appView.root.mainloop()
 
-    def quit(self):
+    def do_quit(self):
         """
-        called by "Quit" button in menu
+        called by "Quit" button in menu & [X] on tk.root
         :return: void
         """
         self.appView.root.destroy()

@@ -8,15 +8,15 @@
 	
 	<setting key="filenameLanguage" value="strings_EN.xml" />
 	
-	<setting key="resizable_x" value="1" />
-	<setting key="resizable_y" value="1" />
+	<setting key="resizable_x" value="True" />
+	<setting key="resizable_y" value="True" />
 
 	<setting key="geometryAppView" value="+300+160" />
-	<setting key="geometryDefaultView" value="648x190" /> 
-	<setting key="geometryConfigView" value="648x190" />
-	<setting key="geometryMinimalView" value="600x84" />
+	<setting key="geometryDefaultView" value="650x200" />
+	<setting key="geometryConfigView" value="650x190" />
+	<setting key="geometryMinimalView" value="650x85" />
 
-	<setting key="openFolderAfterCopy" value="True" />
+	<setting key="openFolderAfterCopy" value="False" />
 	
 	<setting key="source" value="C:/TestSimpleCopy/TestSource/" />
     <setting key="target" value="C:/TestSimpleCopy/" />

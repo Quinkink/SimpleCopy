@@ -25,19 +25,10 @@ class MinimalView(baseFrame.BaseView):
         self.entryTextValue = StringVar()
 
         self.label = tk.Label(self, textvariable=self.labelTextValue)
-        self.label.configure(height=1, width=12)
-        self.label.grid(row=1, column=0, columnspan=1,
-                        ipadx=4, ipady=2, padx=2, pady=2,
-                        sticky=N+W+S)
+        self.label.grid(row=1, column=0, columnspan=1, ipadx=2, ipady=2, padx=2, pady=0, sticky=N+E+W+S)
 
         self.entry = tk.Entry(self, textvariable=self.entryTextValue)
-        self.entry.configure(width=32)
-        self.entry.grid(row=1, column=1, columnspan=4,
-                        ipadx=2, ipady=2, padx=2, pady=2,
-                        sticky=N+W+E+S)
+        self.entry.grid(row=1, column=1, columnspan=4, ipadx=2, ipady=2, padx=2, pady=0, sticky=N+E+W+S)
 
         self.buttonCopy = tk.Button(self, width=1, fg="GREEN")
-        self.buttonCopy.configure(height=1, width=4)
-        self.buttonCopy.grid(row=1, column=5, columnspan=1,
-                             ipadx=2, ipady=2, padx=2, pady=2,
-                             sticky=N+W+S)
+        self.buttonCopy.grid(row=1, column=5, columnspan=1, ipadx=2, ipady=2, padx=2, pady=2, sticky=N+E+W+S)

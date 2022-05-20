@@ -64,6 +64,7 @@ class ConfigController(object):
     def action_apply(self):
         self.view.text.delete(1.0, tk.END)
         self.application_feedback(self.model.strings['defaultMessageClear'], 'GREEN')
+        # self.application_feedback(str(self.app.appView.root.winfo_width()) + " - " + str(self.app.appView.root.winfo_height()), 'ORANGE')
         self.model.xml_settings.set_element_value('openFolderAfterCopy', self.view.varOpenFolderAfterCopy.get())
         self.model.xml_settings.set_element_value('source', self.view.varSourceFolderString.get())
         self.model.xml_settings.set_element_value('target', self.view.varTargetFolderString.get())
