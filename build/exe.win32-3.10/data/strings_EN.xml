@@ -2,9 +2,9 @@
 <strings lang="EN" language="English">
     <view frame="APP">
         <!--APP STRINGS-->
-        <string key="applicationTitle" value="SIMPLE COPY" />
-        <string key="defaultStartView" value="Default"/>
         <string key="menuBarOther" value="Menu" />
+        <string key="menuMinimal" value="Minimal" />
+        <string key="menuVerbose" value="Verbose" />
         <string key="menuSettings" value="Settings" />
         <string key="menuHelp" value="Help" />
         <string key="menuAbout" value="About" />
@@ -37,11 +37,29 @@
     </view>
     <view frame="CONFIG">
         <string key="defaultMessageWelcome" value="Settings" />
-        <string key="defaultMessageText" value="helloworld" />
+        <string key="defaultMessageText" value="Configure your settings" />
+        <string key="defaultCheckbuttonText" value="Open folder after copy?" />
         <string key="defaultMessageCancel" value="Action cancelled by user" />
         <string key="defaultMessageClear" value="Apply button : Clear" />
         <string key="defaultButtonChoose" value="Choose..." />
         <string key="defaultButtonApply" value="Apply" />
         <string key="defaultButtonCancel" value="Cancel" />
+    </view>
+    <view frame="MINIMAL">
+        <string key="defaultLabelValue" value="New folder name : " />
+        <string key="defaultEntryValue" value="enter_client_name" />
+        <string key="defaultMessageClear" value="text cleared by user" />
+        <string key="popupMessageFileExists" value="This folder exists : Overwrite?" />
+        <string key="defaultMessageSuccess" value="Folder copied" />
+        <string key="defaultMessageFailFolderName" value="Please modify default target folder name" />
+        <string key="defaultMessageFailNoFolderName" value="Please specify target folder name" />
+        <string key="defaultMessageFailIllegalCharacters" value="Illegal characters in target folder name" />
+        <string key="defaultMessageFailPermission" value="Permission Error : Folder not copied" />
+        <string key="defaultMessageFailExists" value="File Exists Error : Folder not copied" />
+        <string key="defaultMessageFailRemove" value="Unable to Overwrite : Folder not copied" />
+        <string key="defaultMessageNothingChanged" value="Overwrite cancelled by operator" />
+        <string key="defaultMessageWelcome" value="Copy SOURCE folder -> TARGET folder." />
+        <string key="defaultButtonCopy" value=">" />
+        <string key="defaultButtonReset" value="X" />
     </view>
 </strings>
