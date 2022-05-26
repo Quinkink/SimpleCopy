@@ -60,5 +60,6 @@
         <string key="defaultMessageNothingChanged" value="Overwrite cancelled by operator" />
         <string key="defaultMessageWelcome" value="Copy SOURCE folder -> TARGET folder." />
         <string key="defaultButtonCopy" value=">" />
+        <string key="defaultButtonReset" value="X" />
     </view>
 </strings>

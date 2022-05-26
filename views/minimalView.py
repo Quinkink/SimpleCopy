@@ -32,3 +32,6 @@ class MinimalView(baseFrame.BaseView):
 
         self.buttonCopy = tk.Button(self, width=1, fg="GREEN")
         self.buttonCopy.grid(row=1, column=5, columnspan=1, ipadx=2, ipady=2, padx=2, pady=2, sticky=N+E+W+S)
+
+        self.buttonReset = tk.Button(self, width=1, fg="RED")
+        self.buttonReset.grid(row=1, column=5, columnspan=1, ipadx=2, ipady=2, padx=2, pady=2, sticky=N+E+W+S)

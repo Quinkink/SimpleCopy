@@ -29,12 +29,14 @@ class DefaultController(object):
         self.app = app
         self.app.lastView = 'Default'
         self.model = self.app.model
+
+        # logLevel DEBUG
+        if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+            print('loading view : Default')
+
         self.view = self.app.views['Default']
 
         self.view.entryTextValue.trace("w", lambda name, index, mode, var=self.view.entryTextValue: self.action_update(var))
-
-        self.feedback = self.model.strings['defaultMessageSuccess']
-        self.colour = 'GREEN'
 
         self.source = self.model.xml_settings.get_element_value('source')
         self.target = self.model.xml_settings.get_element_value('target')
@@ -58,84 +60,160 @@ class DefaultController(object):
         self.view.text.insert(tk.END, self.model.strings['defaultTextCopyPrompt'])
         self.view.text['state'] = tk.DISABLED
 
+        self.view.entryTextValue.set(self.model.strings['defaultEntryValue'])
+        self.view.entry.bind('<Button-1>', lambda e: self.action_entry_delete(event='<Button-1>'))
+
         self.view.buttonReset.config(text=(self.model.strings['defaultButtonReset']), command=self.action_reset)
         self.view.buttonReset['state'] = tk.NORMAL
 
         self.view.buttonCopy.config(text=(self.model.strings['defaultButtonCopy']), command=self.action_copy)
         self.view.buttonCopy['state'] = tk.NORMAL
+        self.view.buttonCopy.focus()
+
+    def action_entry_delete(self, event):
+
+        # logLevel DEBUG
+        if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+            print('method : action_entry_delete(self, event)')
+
+        self.view.entry.configure(state=tk.NORMAL)
+        self.view.entry.delete(0, tk.END)
+        self.view.entry.unbind('<Button-1>')
+        self.view.entry.bind('<Return>', lambda e: self.action_return_copy(event='<Return>'))
+
+    def action_return_copy(self, event):
+
+        # logLevel DEBUG
+        if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+            print('method : action_return_copy(self, event)')
+
+        # self.application_feedback(str(self.app.appView.root.winfo_width()) + " - " + str(self.app.appView.root.winfo_height()), 'ORANGE')
+
+        self.view.entry.unbind('<Return>')
+        self.action_copy()
 
     def action_copy(self):
+        feedback = self.model.strings['defaultMessageSuccess']
+        colour = 'GREEN'
 
-        """now = str(datetime.datetime.now())[:19]
-        now = self.now.replace("-", "")
-        now = self.now.replace(" ", "")
-        now = self.now.replace(":", "")"""
+        # logLevel DEBUG
+        if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+            print('method : action_copy(self)')
 
         if self.view.entryTextValue.get() == self.model.strings['defaultEntryValue']:
-            self.view.text.delete(1.0, tk.END)
-            self.feedback = self.model.strings['defaultMessageFailFolderName']
-            self.colour = 'ORANGE'
+            # logLevel DEBUG
+            if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                print('    entryTextValue = defaultEntryValue')
+            feedback = self.model.strings['defaultMessageFailFolderName']
+            colour = 'ORANGE'
 
         elif self.view.entryTextValue.get() == "":
-            self.view.text.delete(1.0, tk.END)
-            self.feedback = self.model.strings['defaultMessageFailNoFolderName']
-            self.colour = 'ORANGE'
+            # logLevel DEBUG
+            if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                print('    entryTextValue = ""')
+            feedback = self.model.strings['defaultMessageFailNoFolderName']
+            colour = 'ORANGE'
 
         elif not re.fullmatch('^[^\\\\/?%*:|\"\'<>.]{1,32}$', self.view.entryTextValue.get()):
-            self.view.text.delete(1.0, tk.END)
-            self.feedback = self.model.strings['defaultMessageFailIllegalCharacters']
-            self.colour = 'ORANGE'
+            # logLevel DEBUG
+            if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                print('    entryTextValue = not valid folder name')
+            feedback = self.model.strings['defaultMessageFailIllegalCharacters']
+            colour = 'ORANGE'
 
         else:
-            self.feedback = self.model.strings['defaultMessageSuccess']
-            self.colour = 'GREEN'
+            feedback = self.model.strings['defaultMessageSuccess']
+            colour = 'GREEN'
+            # logLevel DEBUG
+            if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                print('    attempting COPY')
+
             try:
                 """copy from source to target"""
                 shutil.copytree(self.source, self.target + self.view.entry.get())
             except FileExistsError:
+                # logLevel DEBUG
+                if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                    print('        exception : folder exists error')
+                # SHOULD WE OVERWRITE
                 if self.app.message_dialogue_user_confirm('title', self.model.strings['popupMessageFileExists']):
+                    # logLevel DEBUG
+                    if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                        print('        if : user confirms overwrite')
                     try:
                         """remove existing target folder after prompt"""
                         shutil.rmtree(self.target + self.view.entry.get())
                     except FileExistsError:
-                        self.feedback = self.model.strings['defaultMessageFailRemove']
-                        self.colour = 'RED'
-                    try:
-                        """copy from source to target"""
-                        shutil.copytree(self.source, self.target + self.view.entry.get())
-                    except FileExistsError:
-                        self.feedback = self.model.strings['defaultMessageFailExists']
-                        self.colour = 'RED'
-                    """finally:
-                        self.view.buttonCopy['state'] = tk.DISABLED"""
+                        # logLevel DEBUG
+                        if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                            print('        exception : folder exists error')
+                        feedback = self.model.strings['defaultMessageFailRemove']
+                        colour = 'RED'
+                    else:
+                        try:
+                            # logLevel DEBUG
+                            if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                                print('            try : copy source to target')
+
+                            shutil.copytree(self.source, self.target + self.view.entry.get())
+                        except FileExistsError:
+                            feedback = self.model.strings['defaultMessageFailExists']
+                            colour = 'RED'
+                        else:
+                            # logLevel DEBUG
+                            if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                                print('            else (try) : no exceptions')
+                            self.view.entry['state'] = tk.DISABLED
+                            self.view.buttonCopy['state'] = tk.DISABLED
+                            if self.model.settings['openFolderAfterCopy'] == 'True':
+                                self.action_open_after_copy()
+                        finally:
+                            # logLevel DEBUG
+                            if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                                print('            finally : nothing')
+                            # self.view.buttonCopy['state'] = tk.DISABLED
+                    finally:
+                        # logLevel DEBUG
+                        if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                            print('        finally : nothing')
+                # USER CANCELS OVERWRITE
                 else:
-                    self.feedback = self.model.strings['defaultMessageNothingChanged']
-                    self.colour = 'GREEN'
+                    # logLevel DEBUG
+                    if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                        print('        else (if) : user cancels overwrite')
+                    feedback = self.model.strings['defaultMessageNothingChanged']
+                    colour = 'GREEN'
             except PermissionError:
-                self.feedback = self.model.strings['defaultMessageFailPermission']
-                self.colour = 'RED'
-            finally:
+                # logLevel DEBUG
+                if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                    print('        except : permission error')
+                feedback = self.model.strings['defaultMessageFailPermission']
+                colour = 'RED'
+            else:
+                # logLevel DEBUG
+                if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                    print('        else (try) : no exceptions')
+                self.view.entry['state'] = tk.DISABLED
                 self.view.buttonCopy['state'] = tk.DISABLED
                 if self.model.settings['openFolderAfterCopy'] == 'True':
                     self.action_open_after_copy()
+            finally:
+                # logLevel DEBUG
+                if self.model.xml_settings.get_element_value('logLevel') == 'DEBUG':
+                    print('    finally : nothing')
 
-        self.view.text.delete(1.0, tk.END)
-        self.application_feedback(self.feedback, self.colour)
+        self.application_feedback(feedback, colour)
 
     def action_open_after_copy(self):
         os.system('start ' + self.target + self.view.entry.get())
 
     def action_reset(self):
-        self.feedback = self.model.strings['defaultMessageWelcome']
-        self.colour = 'BLACK'
-        self.application_feedback(self.feedback, self.colour)
-        self.view.entryTextValue.set(self.model.strings['defaultEntryValue'])
-        self.view.text['state'] = tk.NORMAL
-        self.view.text.delete(1.0, tk.END)
-        self.view.text.insert(tk.END, self.model.strings['defaultTextCopyPrompt'])
-        self.view.text['state'] = tk.DISABLED
+        self.application_feedback(self.model.strings['defaultMessageWelcome'], 'BLACK')
+        self.view.entry.bind('<Button-1>', lambda e: self.action_entry_delete(event='<Button-1>'))
+        self.view.entry['state'] = tk.NORMAL
         self.view.buttonCopy['state'] = tk.NORMAL
-
+        self.view.entryTextValue.set(self.model.strings['defaultEntryValue'])
+        self.view.buttonCopy.focus()
 
     def action_update(self, var):
         if self.view.entryTextValue.get() != self.model.strings['defaultEntryValue']:

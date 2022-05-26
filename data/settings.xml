@@ -16,7 +16,7 @@
 	<setting key="geometryConfigView" value="650x190" />
 	<setting key="geometryMinimalView" value="650x85" />
 
-	<setting key="openFolderAfterCopy" value="False" />
+	<setting key="openFolderAfterCopy" value="True" />
 	
 	<setting key="source" value="C:/TestSimpleCopy/TestSource/" />
     <setting key="target" value="C:/TestSimpleCopy/" />
